@@ -1,0 +1,29 @@
+class Solution {
+    int MOD = (int)1e9 + 7;
+    public int gcd(int a , int b) {
+        if(b == 0)
+          return a;
+        return gcd(b , a % b);
+    }
+    public long findLcm(int a , int b) {
+        long x = (long)a * b;
+        return x / gcd(a , b);
+
+    }
+    public int nthMagicalNumber(int n, int a, int b) {
+        long l = Math.min(a , b);
+        long h = ((long)n * Math.min(a , b));
+        long lcm = findLcm(a , b);
+        while(l < h) {
+            long mid = l + (h - l) / 2;
+            long total = mid / a + mid / b - mid / lcm;
+            if(total < n) {
+                l = mid + 1;
+            }
+            else {
+                h = mid;
+            }
+        }
+        return (int)(l % MOD);
+    }
+}
